@@ -31,7 +31,7 @@ def render() -> None:
             U = parse_set(universe_raw) if universe_raw.strip() else list(set(A + B))
             ops = compute_set_ops(A, B, U)
             cart = ops["cartesian"]
-            st.toast(f"|A∩B| = {len(ops['intersection'])}  ·  |A∪B| = {len(ops['union'])}", icon="✓")
+            st.toast(f"|A∩B| = {len(ops['intersection'])}  ·  |A∪B| = {len(ops['union'])}", icon="✅")
 
             ie = len(ops["intersection"])
             st.markdown(
