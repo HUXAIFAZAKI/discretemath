@@ -50,13 +50,13 @@ def render() -> None:
             steps_html += f"<div style='opacity:.7;'> + {i} = {running}</div>"
         st.markdown(f"""
         <div class='result-box'>
-          <div style='color:#FF6B35;margin-bottom:0.5rem;'>Base case (n=1): 1 = 1·2/2 = 1 ✓</div>
+          <div style='color:#408A71;margin-bottom:0.5rem;'>Base case (n=1): 1 = 1·2/2 = 1 ✓</div>
           <div style='margin-bottom:0.4rem;'>Running sum 1 to {n_demo}:</div>
           {steps_html}
-          <hr style='border-color:rgba(255,107,53,.2);margin:0.6rem 0;'/>
-          <div style='color:#FF6B35;font-weight:600;'>Σ(1..{n_demo}) = {actual}</div>
+          <hr style='border-color:rgba(64,138,113,.2);margin:0.6rem 0;'/>
+          <div style='color:#408A71;font-weight:600;'>Σ(1..{n_demo}) = {actual}</div>
           <div style='margin-bottom:0;'>Formula: {n_demo}·{n_demo+1}/2 = {formula_val}</div>
-          <div style='color:{"#FF6B35" if actual == formula_val else "#FF5252"};margin-top:0.3rem;'>
+          <div style='color:{"#408A71" if actual == formula_val else "#FF5252"};margin-top:0.3rem;'>
             {"✓ Match! Induction holds." if actual == formula_val else "✗ Mismatch!"}
           </div>
         </div>""", unsafe_allow_html=True)
@@ -91,16 +91,16 @@ def render() -> None:
                 <div class='card'>
                   <div style='font-weight:600;margin-bottom:0.8rem;'>{proof['claim']}</div>
                   <div style='margin-bottom:0.6rem;'>
-                    <span style='color:#FF6B35;font-family:"JetBrains Mono",monospace;font-size:0.75rem;'>BASE CASE:</span><br>
+                    <span style='color:#408A71;font-family:"JetBrains Mono",monospace;font-size:0.75rem;'>BASE CASE:</span><br>
                     <span style='font-size:0.85rem;'>{proof['base']}</span>
                   </div>
                   <div style='margin-bottom:0.6rem;'>
-                    <span style='color:#FFA060;font-family:"JetBrains Mono",monospace;font-size:0.75rem;'>INDUCTIVE HYPOTHESIS:</span><br>
+                    <span style='color:#B0E4CC;font-family:"JetBrains Mono",monospace;font-size:0.75rem;'>INDUCTIVE HYPOTHESIS:</span><br>
                     <span style='font-size:0.85rem;'>{proof['hyp']}</span>
                   </div>
                   <div>
-                    <span style='color:#FFA060;font-family:"JetBrains Mono",monospace;font-size:0.75rem;'>INDUCTIVE STEP:</span><br>
-                    <pre style='font-size:0.83rem;background:rgba(0,0,0,.04);padding:0.6rem;border:1px solid rgba(255,107,53,.2);
+                    <span style='color:#B0E4CC;font-family:"JetBrains Mono",monospace;font-size:0.75rem;'>INDUCTIVE STEP:</span><br>
+                    <pre style='font-size:0.83rem;background:rgba(0,0,0,.04);padding:0.6rem;border:1px solid rgba(64,138,113,.2);
                     border-radius:4px;white-space:pre-wrap;margin-top:0.3rem;'>{proof['step']}</pre>
                   </div>
                 </div>""", unsafe_allow_html=True)

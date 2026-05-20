@@ -34,12 +34,12 @@ def render() -> None:
                 result = graph_analyze(adj)
 
                 badges = " ".join(
-                    f"<span style='background:#FF6B35;color:#FFF5EE;padding:2px 10px;border-radius:999px;font-size:0.75rem;font-weight:700;'>{p}</span>"
+                    f"<span style='background:#285A48;color:#B0E4CC;padding:2px 10px;border-radius:999px;font-size:0.75rem;font-weight:700;border:1px solid rgba(64,138,113,.4);'>{p}</span>"
                     for p in result.get("properties", [])
                 ) if result.get("properties") else "<span style='opacity:.6;'>None detected</span>"
 
                 deg_table = "".join(
-                    f"<tr><td style='color:#FFA060;padding:3px 12px;'>v{i}</td><td style='color:#FF6B35;padding:3px 12px;'>{d}</td></tr>"
+                    f"<tr><td style='color:#6EADA0;padding:3px 12px;font-family:\"JetBrains Mono\",monospace;'>v{i}</td><td style='color:#408A71;padding:3px 12px;font-weight:600;'>{d}</td></tr>"
                     for i, d in enumerate(result["degrees"])
                 )
 

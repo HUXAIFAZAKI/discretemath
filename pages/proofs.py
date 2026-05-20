@@ -71,8 +71,8 @@ def render() -> None:
                   <div class='sec-tag'>STRATEGY</div>
                   <p style='font-size:0.85rem;'>{content['description']}</p>
                   <div class='sec-tag' style='margin-top:0.8rem;'>STRUCTURE</div>
-                  <pre style='color:#FF6B35;font-family:"JetBrains Mono",monospace;font-size:0.78rem;
-                  background:rgba(255,107,53,0.05);padding:0.7rem;border:1px solid rgba(255,107,53,.2);border-radius:4px;'>{content['structure']}</pre>
+                  <pre style='color:#408A71;font-family:"JetBrains Mono",monospace;font-size:0.78rem;
+                  background:rgba(64,138,113,0.08);padding:0.7rem;border:1px solid rgba(64,138,113,.2);border-radius:4px;'>{content['structure']}</pre>
                 </div>""", unsafe_allow_html=True)
             with col2:
                 st.markdown(f"""
@@ -80,6 +80,6 @@ def render() -> None:
                   <div class='sec-tag'>WORKED EXAMPLE</div>
                   <div style='font-weight:600;margin-bottom:0.5rem;font-size:0.9rem;'>Claim: {content['example_claim']}</div>
                   <pre style='font-family:"JetBrains Mono",monospace;font-size:0.75rem;
-                  background:rgba(0,0,0,.04);padding:0.7rem;border:1px solid rgba(255,107,53,.2);border-radius:4px;
+                  background:rgba(0,0,0,.04);padding:0.7rem;border:1px solid rgba(64,138,113,.2);border-radius:4px;
                   white-space:pre-wrap;'>{content['example_proof']}</pre>
                 </div>""", unsafe_allow_html=True)

@@ -51,9 +51,9 @@ def render() -> None:
             st.markdown(f"<div class='formula'>{nth}</div>", unsafe_allow_html=True)
             st.markdown(f"""
             <div class='result-box'>
-              <div style='color:#FF6B35;margin-bottom:0.4rem;'>Terms:</div>
+              <div style='color:#408A71;margin-bottom:0.4rem;'>Terms:</div>
               <div style='margin-bottom:0.8rem;word-break:break-all;'>{', '.join(str(t) for t in terms)}</div>
-              <div style='color:#FF6B35;margin-bottom:0.4rem;'>Sum:</div>
+              <div style='color:#408A71;margin-bottom:0.4rem;'>Sum:</div>
               <div style='font-size:1rem;font-weight:700;margin-bottom:0.4rem;'>{s}</div>
               <div style='font-size:0.78rem;opacity:.7;'>{formula}</div>
             </div>""", unsafe_allow_html=True)
@@ -69,7 +69,7 @@ def render() -> None:
         ]
         html = "<table class='tt' style='width:100%;'><thead><tr><th>Name</th><th>Notation</th><th>Formula</th><th>Example</th></tr></thead><tbody>"
         for name, notation, formula, example in formulas:
-            html += f"<tr><td class='T' style='text-align:left'>{name}</td><td>{notation}</td><td style='color:#FF6B35'>{formula}</td><td style='opacity:.7;'>{example}</td></tr>"
+            html += f"<tr><td class='T' style='text-align:left'>{name}</td><td>{notation}</td><td style='color:#408A71'>{formula}</td><td style='opacity:.7;'>{example}</td></tr>"
         html += "</tbody></table>"
         st.markdown(f"<div class='result-box'>{html}</div>", unsafe_allow_html=True)
 

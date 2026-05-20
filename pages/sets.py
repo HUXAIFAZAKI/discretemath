@@ -31,6 +31,7 @@ def render() -> None:
             U = parse_set(universe_raw) if universe_raw.strip() else list(set(A + B))
             ops = compute_set_ops(A, B, U)
             cart = ops["cartesian"]
+            st.toast(f"|A∩B| = {len(ops['intersection'])}  ·  |A∪B| = {len(ops['union'])}", icon="✓")
 
             ie = len(ops["intersection"])
             st.markdown(
@@ -84,6 +85,65 @@ def render() -> None:
             with _vcols[_i]:
                 _raw_v[_sn] = st.text_input(f"Set {_sn}", _set_defaults[_sn], key=f"venn_s{_sn}")
 
+        # ── Operation highlight selector ──────────────────────────────────
+        _OPS_2 = {
+            "— All regions —":              lambda m: True,
+            "A  (Set A)":                   lambda m: bool(m & 1),
+            "B  (Set B)":                   lambda m: bool(m & 2),
+            "A ∪ B  (Union)":               lambda m: bool(m & 1) or bool(m & 2),
+            "A ∩ B  (Intersection)":        lambda m: bool(m & 1) and bool(m & 2),
+            "A − B  (A minus B)":           lambda m: bool(m & 1) and not bool(m & 2),
+            "B − A  (B minus A)":           lambda m: bool(m & 2) and not bool(m & 1),
+            "A △ B  (Symmetric Diff.)":     lambda m: bool(m & 1) != bool(m & 2),
+            "Ā  (Complement of A in B)":    lambda m: bool(m & 2) and not bool(m & 1),
+            "B̄  (Complement of B in A)":   lambda m: bool(m & 1) and not bool(m & 2),
+        }
+        _OPS_3 = {
+            "— All regions —":              lambda m: True,
+            "A  (Set A)":                   lambda m: bool(m & 1),
+            "B  (Set B)":                   lambda m: bool(m & 2),
+            "C  (Set C)":                   lambda m: bool(m & 4),
+            "A ∪ B ∪ C  (Union)":           lambda m: bool(m & 7),
+            "A ∩ B ∩ C  (Triple Intersect)":lambda m: bool(m & 1) and bool(m & 2) and bool(m & 4),
+            "A ∩ B  (A and B)":             lambda m: bool(m & 1) and bool(m & 2),
+            "A ∩ C  (A and C)":             lambda m: bool(m & 1) and bool(m & 4),
+            "B ∩ C  (B and C)":             lambda m: bool(m & 2) and bool(m & 4),
+            "A − (B ∪ C)  (A only)":        lambda m: (m == 1),
+            "B − (A ∪ C)  (B only)":        lambda m: (m == 2),
+            "C − (A ∪ B)  (C only)":        lambda m: (m == 4),
+            "A △ B  (A sym-diff B)":        lambda m: bool(m & 1) != bool(m & 2),
+        }
+        _OPS_4 = {
+            "— All regions —":              lambda m: True,
+            "A":                            lambda m: bool(m & 1),
+            "B":                            lambda m: bool(m & 2),
+            "C":                            lambda m: bool(m & 4),
+            "D":                            lambda m: bool(m & 8),
+            "A ∪ B ∪ C ∪ D":               lambda m: True,
+            "A ∩ B ∩ C ∩ D":               lambda m: m == 15,
+            "A ∩ B":                        lambda m: bool(m & 1) and bool(m & 2),
+            "A ∩ C":                        lambda m: bool(m & 1) and bool(m & 4),
+            "B ∩ D":                        lambda m: bool(m & 2) and bool(m & 8),
+            "A only":                       lambda m: m == 1,
+            "B only":                       lambda m: m == 2,
+            "C only":                       lambda m: m == 4,
+            "D only":                       lambda m: m == 8,
+        }
+        _ops_map = {2: _OPS_2, 3: _OPS_3, 4: _OPS_4}[n_sets]
+        _op_names = list(_ops_map.keys())
+
+        _hl_col1, _hl_col2 = st.columns([3, 1])
+        with _hl_col1:
+            _selected_op = st.selectbox(
+                "🎨 Highlight operation:",
+                _op_names, index=0, key=f"venn_op_{n_sets}"
+            )
+        with _hl_col2:
+            _hl_color = st.color_picker("Highlight color", "#52D9A0", key="venn_hl_color")
+
+        _highlight_fn  = _ops_map[_selected_op]
+        _highlight_all = _selected_op.startswith("— All")
+
         if st.button("Generate Venn Diagram", key="venn_run"):
             try:
                 import matplotlib.pyplot as plt
@@ -108,12 +168,12 @@ def render() -> None:
                     _label = " ∩ ".join(_in) + (" only" if len(_in) < n_sets else "")
                     _regions[_mask] = (_label, _region_elems(_mask))
 
-                _c_palette = ['#FF6B35', '#FFA060', '#38BDF8', '#F472B6']
+                _c_palette = ['#408A71', '#B0E4CC', '#38BDF8', '#F472B6']
                 _html_rows = ""
                 for _mask in sorted(_regions.keys()):
                     _lbl, _els = _regions[_mask]
                     _in_i = [i for i in range(n_sets) if _mask & (1 << i)]
-                    _col  = _c_palette[_in_i[0]] if len(_in_i) == 1 else '#FFA060'
+                    _col  = _c_palette[_in_i[0]] if len(_in_i) == 1 else '#B0E4CC'
                     _html_rows += (
                         f"<tr><td style='color:{_col};text-align:left;padding-right:1rem'>{_lbl}</td>"
                         f"<td>{fmt_set(_els)}</td>"
@@ -175,9 +235,15 @@ def render() -> None:
 
                 _cmasks = [_in_ellipse(XX, YY, *g) for g in _geom]
                 _img = np.zeros((H, W, 4), dtype=float)
+                # Parse highlight color hex → RGB floats
+                def _hex_to_rgb(h):
+                    h = h.lstrip('#')
+                    return tuple(int(h[i:i+2], 16) / 255 for i in (0, 2, 4))
+                _hl_rgb = _hex_to_rgb(_hl_color)
+
                 _rgb_sets = [
-                    (255/255, 107/255,  53/255),  # #FF6B35 orange
-                    (255/255, 160/255,  96/255),  # #FFA060 lt-orange
+                    ( 64/255, 138/255, 113/255),  # #408A71 teal
+                    (176/255, 228/255, 204/255),  # #B0E4CC mint
                     ( 56/255, 189/255, 248/255),  # #38BDF8 sky-blue
                     (244/255, 114/255, 182/255),  # #F472B6 pink
                 ]
@@ -191,10 +257,20 @@ def render() -> None:
                             _rm &= ~_cmasks[i]
                     if not _rm.any():
                         continue
-                    rr = sum(_rgb_sets[i][0] for i in _in_i) / len(_in_i)
-                    gg = sum(_rgb_sets[i][1] for i in _in_i) / len(_in_i)
-                    bb = sum(_rgb_sets[i][2] for i in _in_i) / len(_in_i)
-                    aa = min(0.38 + 0.1 * (len(_in_i) - 1), 0.78)
+                    if _highlight_all:
+                        # Normal per-set colour
+                        rr = sum(_rgb_sets[i][0] for i in _in_i) / len(_in_i)
+                        gg = sum(_rgb_sets[i][1] for i in _in_i) / len(_in_i)
+                        bb = sum(_rgb_sets[i][2] for i in _in_i) / len(_in_i)
+                        aa = min(0.38 + 0.1 * (len(_in_i) - 1), 0.78)
+                    elif _highlight_fn(_mask):
+                        # Highlighted region — use chosen highlight colour, bright
+                        rr, gg, bb = _hl_rgb
+                        aa = 0.78
+                    else:
+                        # Dimmed region — near-transparent grey
+                        rr = gg = bb = 0.45
+                        aa = 0.07
                     _img[_rm] = [rr, gg, bb, aa]
 
                 _bg = '#060504' if st.session_state.get('theme', 'dark') == 'dark' else '#F5F1EC'
@@ -205,7 +281,7 @@ def render() -> None:
                           origin='lower', aspect='auto', interpolation='bilinear')
 
                 _theta = np.linspace(0, 2 * math.pi, 500)
-                _ec = ['#FF6B35', '#FFA060', '#38BDF8', '#F472B6']
+                _ec = ['#408A71', '#B0E4CC', '#38BDF8', '#F472B6']
                 for i, (cx, cy, a, b, ang) in enumerate(_geom):
                     ct, st_ = np.cos(ang), np.sin(ang)
                     ex = cx + a * np.cos(_theta) * ct - b * np.sin(_theta) * st_
@@ -245,12 +321,39 @@ def render() -> None:
                 ax.axis('off')
                 ax.set_title(
                     f'{n_sets}-Set Venn Diagram  ·  '
-                    + ' · '.join(f'{n}={len(_parsed_v[n])}' for n in _set_names),
+                    + ' · '.join(f'{n}={len(_parsed_v[n])}' for n in _set_names)
+                    + (f'  ·  HL: {_selected_op}' if not _highlight_all else ''),
                     color='#9E9890', fontsize=10, pad=10, fontfamily='monospace'
                 )
                 plt.tight_layout(pad=0.4)
                 st.pyplot(fig, use_container_width=True)
                 plt.close(fig)
+
+                # ── Operation legend ──────────────────────────────────────
+                if not _highlight_all:
+                    _hl_masks = [m for m in range(1, 2**n_sets) if _highlight_fn(m)]
+                    _hl_els   = []
+                    for m in _hl_masks:
+                        _, els = _regions.get(m, ('', []))
+                        _hl_els.extend(els)
+                    _hl_els = sorted(set(_hl_els), key=str)
+                    st.markdown(
+                        f"<div style='display:flex;align-items:center;gap:.8rem;"
+                        f"padding:.55rem 1rem;border-radius:8px;"
+                        f"border:1px solid rgba(64,138,113,.25);"
+                        f"background:rgba(64,138,113,.06);margin-top:.4rem;'>"
+                        f"<span style='display:inline-block;width:14px;height:14px;"
+                        f"border-radius:3px;background:{_hl_color};flex-shrink:0;'></span>"
+                        f"<span style='font-family:\"JetBrains Mono\",monospace;"
+                        f"font-size:.72rem;color:#408A71;font-weight:700;'>{_selected_op}</span>"
+                        f"<span style='font-family:\"JetBrains Mono\",monospace;"
+                        f"font-size:.72rem;color:#6EADA0;'>→ "
+                        f"{'∅' if not _hl_els else ', '.join(str(e) for e in _hl_els[:20])}"
+                        f"{'…' if len(_hl_els) > 20 else ''}"
+                        f" &nbsp;|&nbsp; {len(_hl_els)} element(s)</span>"
+                        f"</div>",
+                        unsafe_allow_html=True
+                    )
 
             except ImportError:
                 st.info("Install matplotlib (`pip install matplotlib`) for the visual Venn diagram.")
@@ -274,6 +377,6 @@ def render() -> None:
         ]
         html = "<table class='tt' style='width:100%;'><thead><tr><th>Law</th><th>Union Form</th><th>Intersection Form</th></tr></thead><tbody>"
         for law, f1, f2 in identities:
-            html += f"<tr><td class='T' style='text-align:left'>{law}</td><td style='color:#FF6B35'>{f1}</td><td style='color:#FFA060'>{f2}</td></tr>"
+            html += f"<tr><td class='T' style='text-align:left'>{law}</td><td style='color:#408A71'>{f1}</td><td style='color:#B0E4CC'>{f2}</td></tr>"
         html += "</tbody></table>"
         st.markdown(f"<div class='result-box'>{html}</div>", unsafe_allow_html=True)

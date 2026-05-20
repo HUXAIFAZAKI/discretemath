@@ -93,17 +93,17 @@ def render() -> None:
             c1, c2, c3 = st.columns(3)
             with c1:
                 st.markdown(f"""<div class='card'><div class='sec-tag'>REFLEXIVE CLOSURE</div>
-                  <div style='color:#FF6B35;font-family:"JetBrains Mono",monospace;font-size:0.85rem;'>{rc}</div>
+                  <div style='color:#408A71;font-family:"JetBrains Mono",monospace;font-size:0.85rem;'>{rc}</div>
                   <div style='font-size:0.75rem;margin-top:0.5rem;opacity:.7;'>Added: {set(rc) - set(pairs)}</div></div>""",
                   unsafe_allow_html=True)
             with c2:
                 st.markdown(f"""<div class='card'><div class='sec-tag'>SYMMETRIC CLOSURE</div>
-                  <div style='color:#FFA060;font-family:"JetBrains Mono",monospace;font-size:0.85rem;'>{sc}</div>
+                  <div style='color:#B0E4CC;font-family:"JetBrains Mono",monospace;font-size:0.85rem;'>{sc}</div>
                   <div style='font-size:0.75rem;margin-top:0.5rem;opacity:.7;'>Added: {set(sc) - set(pairs)}</div></div>""",
                   unsafe_allow_html=True)
             with c3:
                 st.markdown(f"""<div class='card'><div class='sec-tag'>TRANSITIVE CLOSURE (Warshall)</div>
-                  <div style='color:#FFA060;font-family:"JetBrains Mono",monospace;font-size:0.85rem;'>{tc}</div>
+                  <div style='color:#B0E4CC;font-family:"JetBrains Mono",monospace;font-size:0.85rem;'>{tc}</div>
                   <div style='font-size:0.75rem;margin-top:0.5rem;opacity:.7;'>Added: {set(tc) - set(pairs)}</div></div>""",
                   unsafe_allow_html=True)
 
@@ -120,7 +120,7 @@ def render() -> None:
             r2 = parse_pairs(r2_raw, n_comp)
             composed = compose_relations(r1, r2)
             st.markdown(f"**R₁:** {r1}  |  **R₂:** {r2}")
-            st.markdown(f"<div class='result-box'><span style='color:#FF6B35;'>R₁ ∘ R₂ = </span>{composed}</div>", unsafe_allow_html=True)
+            st.markdown(f"<div class='result-box'><span style='color:#408A71;'>R₁ ∘ R₂ = </span>{composed}</div>", unsafe_allow_html=True)
             steps = [
                 f"({a},{b}) ∈ R₁ and ({b},{c}) ∈ R₂  →  ({a},{c}) ∈ R₁∘R₂"
                 for (a, b) in r1 for (b2, c) in r2 if b == b2
@@ -133,7 +133,7 @@ def render() -> None:
         st.markdown("<div class='sec-tag'>EQUIVALENCE CLASSES</div>", unsafe_allow_html=True)
         st.markdown("""<p style='font-size:0.85rem;'>
         An <b>equivalence relation</b> is reflexive, symmetric, and transitive.
-        It partitions the set into disjoint <b style='color:#FF6B35;'>equivalence classes</b>.</p>""",
+        It partitions the set into disjoint <b style='color:#408A71;'>equivalence classes</b>.</p>""",
         unsafe_allow_html=True)
         st.markdown("<div class='formula'>A / R = {[a] | a ∈ A} where [a] = {b ∈ A | aRb}</div>", unsafe_allow_html=True)
 
@@ -146,10 +146,10 @@ def render() -> None:
             if is_equivalence(n_eq, pairs):
                 classes = equivalence_classes(n_eq, pairs)
                 st.success("✓ This IS an equivalence relation")
-                html = f"<div style='color:#FF6B35;margin-bottom:0.6rem;font-size:0.75rem;'>A/R has {len(classes)} equivalence class(es):</div>"
+                html = f"<div style='color:#408A71;margin-bottom:0.6rem;font-size:0.75rem;'>A/R has {len(classes)} equivalence class(es):</div>"
                 for root, members in classes.items():
                     rep = members[0]
-                    html += f"<div style='margin-bottom:0.4rem;'><span style='color:#FF6B35;'>[{rep}]</span> = {{{', '.join(str(m) for m in members)}}}</div>"
+                    html += f"<div style='margin-bottom:0.4rem;'><span style='color:#408A71;'>[{rep}]</span> = {{{', '.join(str(m) for m in members)}}}</div>"
                 st.markdown(f"<div class='result-box'>{html}</div>", unsafe_allow_html=True)
             else:
                 props = relation_properties(n_eq, pairs)
@@ -160,7 +160,7 @@ def render() -> None:
         st.markdown("<div class='sec-tag'>PARTIAL ORDERINGS (POSET)</div>", unsafe_allow_html=True)
         st.markdown("""<p style='font-size:0.85rem;'>
         A <b>partial order</b> is reflexive, antisymmetric, and transitive.
-        The pair (A, R) is called a <b style='color:#FF6B35;'>partially ordered set (POSET)</b>.</p>""",
+        The pair (A, R) is called a <b style='color:#408A71;'>partially ordered set (POSET)</b>.</p>""",
         unsafe_allow_html=True)
         st.markdown("<div class='formula'>Poset (A, ≤) satisfies: reflexive + antisymmetric + transitive</div>", unsafe_allow_html=True)
 
@@ -179,8 +179,8 @@ def render() -> None:
                 maximal = [e for e in elements if e not in has_successor]
                 st.markdown(f"""
                 <div class='result-box'>
-                  <div style='color:#FF6B35;'>Minimal elements: {minimal}</div>
-                  <div style='color:#FFA060;margin-top:0.4rem;'>Maximal elements: {maximal}</div>
+                  <div style='color:#408A71;'>Minimal elements: {minimal}</div>
+                  <div style='color:#B0E4CC;margin-top:0.4rem;'>Maximal elements: {maximal}</div>
                   <div style='font-size:0.72rem;margin-top:0.4rem;opacity:.7;'>
                     Comparable pairs: {[(a,b) for (a,b) in pairs if a != b]}
                   </div>

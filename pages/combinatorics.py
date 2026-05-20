@@ -45,22 +45,22 @@ def render() -> None:
                 st.markdown(f"""
                 <div class='result-box' style='display:flex;gap:2rem;'>
                   <div>
-                    <div style='color:#FF6B35;font-size:0.75rem;margin-bottom:0.3rem;'>P({n},{r})</div>
-                    <div style='font-size:2rem;font-weight:700;'>{p:,}</div>
-                    <div style='font-size:0.75rem;opacity:.7;'>{n}! / {n-r}!</div>
+                    <div style='color:#408A71;font-size:0.75rem;margin-bottom:0.3rem;letter-spacing:.1em;font-family:"JetBrains Mono",monospace;'>P({n},{r})</div>
+                    <div style='font-size:2rem;font-weight:800;color:#B0E4CC;'>{p:,}</div>
+                    <div style='font-size:0.75rem;opacity:.6;'>{n}! / {n-r}!</div>
                   </div>
-                  <div style='border-left:1px solid rgba(255,107,53,.2);padding-left:2rem;'>
-                    <div style='color:#FFA060;font-size:0.75rem;margin-bottom:0.3rem;'>C({n},{r})</div>
-                    <div style='font-size:2rem;font-weight:700;'>{c:,}</div>
-                    <div style='font-size:0.75rem;opacity:.7;'>{n}! / ({r}! · {n-r}!)</div>
+                  <div style='border-left:1px solid rgba(64,138,113,.25);padding-left:2rem;'>
+                    <div style='color:#B0E4CC;font-size:0.75rem;margin-bottom:0.3rem;letter-spacing:.1em;font-family:"JetBrains Mono",monospace;'>C({n},{r})</div>
+                    <div style='font-size:2rem;font-weight:800;color:#B0E4CC;'>{c:,}</div>
+                    <div style='font-size:0.75rem;opacity:.6;'>{n}! / ({r}! · {n-r}!)</div>
                   </div>
                 </div>""", unsafe_allow_html=True)
 
-                # Pascal's triangle context row
+                st.toast(f"P({n},{r}) = {p:,} · C({n},{r}) = {c:,}", icon="✓")
                 if n <= 15:
                     row = [math.comb(n, k) for k in range(n + 1)]
                     highlighted = "".join(
-                        f"<span style='color:#FF6B35;font-weight:700;'>{v}</span>" if k == r else f"<span style='opacity:.6;'>{v}</span>"
+                        f"<span style='color:#408A71;font-weight:700;text-shadow:0 0 8px rgba(64,138,113,.5);'>{v}</span>" if k == r else f"<span style='opacity:.5;'>{v}</span>"
                         for k, v in enumerate(row)
                     )
                     sep = "<span style='opacity:.3;'> · </span>"
@@ -85,14 +85,15 @@ def render() -> None:
         if st.button("Apply Pigeonhole", key="ph_btn"):
             n, k = int(ph_n), int(ph_k)
             guaranteed = math.ceil(n / k)
+            st.toast(f"⌈{n}/{k}⌉ = {guaranteed} guaranteed!", icon="✓")
             st.markdown(f"""
             <div class='result-box'>
-              <div style='color:#FF6B35;font-size:0.9rem;margin-bottom:0.5rem;'>
-                Distributing <b>{n} objects</b> into <b>{k} boxes</b>:
+              <div style='color:#B0E4CC;font-size:0.9rem;margin-bottom:0.5rem;font-family:"Space Grotesk",sans-serif;'>
+                Distributing <b style='color:#408A71;'>{n} objects</b> into <b style='color:#408A71;'>{k} boxes</b>:
               </div>
               <div class='formula'>⌈{n}/{k}⌉ = {guaranteed}</div>
               <p style='margin-top:0.5rem;'>
-                At least one box must contain <b style='color:#FF6B35;'>{guaranteed}</b> or more objects.
+                At least one box must contain <b style='color:#B0E4CC;font-weight:800;font-size:1.1em;'>{guaranteed}</b> or more objects.
               </p>
             </div>""", unsafe_allow_html=True)
 

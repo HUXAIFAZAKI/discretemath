@@ -141,7 +141,7 @@ def _render_progress_dashboard() -> None:
       <span style='font-family:"Space Grotesk",sans-serif;font-size:.85rem;font-weight:600;color:{title_c};'>
         Overall Mastery
       </span>
-      <span style='font-family:"JetBrains Mono",monospace;font-size:.72rem;color:#FF6B35;'>{overall_pct}%</span>
+      <span style='font-family:"JetBrains Mono",monospace;font-size:.72rem;color:#408A71;'>{overall_pct}%</span>
     </div>
     <div class='progress-bar-bg'>
       <div class='progress-bar-fill' style='width:{overall_pct}%'></div>
@@ -246,8 +246,8 @@ def _render_roadmap() -> None:
     st.markdown("<br>", unsafe_allow_html=True)
     st.markdown("""
     <div style='display:flex;gap:1rem;flex-wrap:wrap;justify-content:center;font-family:"JetBrains Mono",monospace;font-size:.62rem;color:#706860;'>
-      <span>■ <span style='color:#FF6B35;'>Orange border</span> = Mastered</span>
-      <span>■ <span style='color:#FFA06066;'>Faded border</span> = In Progress</span>
+      <span>■ <span style='color:#408A71;'>Orange border</span> = Mastered</span>
+      <span>■ <span style='color:#B0E4CC66;'>Faded border</span> = In Progress</span>
       <span>■ Dim = Not started</span>
     </div>
     """, unsafe_allow_html=True)
@@ -275,9 +275,9 @@ def _render_explain(topic: str) -> None:
         with cols[idx % 2]:
             st.markdown(f"""
             <div class='card' style='margin-bottom:.6rem;'>
-              <div style='color:#FF6B35;font-family:"JetBrains Mono",monospace;font-size:.72rem;
+              <div style='color:#408A71;font-family:"JetBrains Mono",monospace;font-size:.72rem;
               letter-spacing:.08em;margin-bottom:.3rem;'>{name}</div>
-              <p style='color:#8892a4;font-size:.82rem;margin:0;'>{desc}</p>
+              <p style='color:#6EADA0;font-size:.82rem;margin:0;'>{desc}</p>
             </div>""", unsafe_allow_html=True)
 
     if content.get("formulas"):
@@ -290,9 +290,9 @@ def _render_explain(topic: str) -> None:
 
     if content.get("tip"):
         st.markdown(f"""
-        <div style='background:rgba(255,107,53,.07);border:1px solid rgba(255,107,53,.3);
-        border-left:3px solid #FF6B35;padding:.8rem 1.1rem;border-radius:8px;margin-top:.8rem;'>
-          <span style='color:#FF6B35;font-family:"JetBrains Mono",monospace;font-size:.7rem;
+        <div style='background:rgba(64,138,113,.08);border:1px solid rgba(255,107,53,.3);
+        border-left:3px solid #408A71;padding:.8rem 1.1rem;border-radius:8px;margin-top:.8rem;'>
+          <span style='color:#408A71;font-family:"JetBrains Mono",monospace;font-size:.7rem;
           letter-spacing:.08em;'>💡 STUDY TIP</span>
           <p style='color:#b8c4d4;margin:.4rem 0 0;font-size:.85rem;'>{content['tip']}</p>
         </div>""", unsafe_allow_html=True)
@@ -324,7 +324,12 @@ def _render_quiz(topic: str) -> None:
         score = st.session_state[score_key]
         pct   = int(score / total * 100)
         _update_quiz_score(topic, pct)
-        color = "#4ADE80" if pct >= 70 else "#FFA060" if pct >= 40 else "#FF5252"
+        color = "#4ADE80" if pct >= 70 else "#B0E4CC" if pct >= 40 else "#EF5350"
+        if pct == 100:
+            st.balloons()
+            st.toast("Perfect score! 🎉 You've mastered this topic!", icon="🏆")
+        elif pct >= 70:
+            st.toast(f"Great job! {pct}% — keep it up!", icon="✓")
         st.markdown(f"""
         <div style='text-align:center;padding:2.5rem 1rem;'>
           <div style='font-family:"JetBrains Mono",monospace;font-size:.75rem;color:#9E9890;
@@ -360,7 +365,7 @@ def _render_quiz(topic: str) -> None:
     selected = st.session_state[ans_key]
     if selected is None:
         for i, opt in enumerate(q["options"]):
-            if st.button(opt, key=f"opt_{topic}_{current}_{i}"):
+            if st.button(opt, key=f"opt_{topic}_{current}_{i}", use_container_width=True, type="secondary"):
                 st.session_state[ans_key] = i
                 if i == q["answer"]:
                     st.session_state[score_key] += 1
@@ -377,9 +382,9 @@ def _render_quiz(topic: str) -> None:
             st.error(f"✗ Incorrect. Correct: **{q['options'][q['answer']]}**")
 
         st.markdown(f"""
-        <div style='background:rgba(255,107,53,.05);border:1px solid rgba(255,107,53,.2);
-        border-left:3px solid #FF6B35;padding:.7rem 1rem;margin-top:.5rem;border-radius:6px;'>
-          <span style='color:#FF6B35;font-family:"JetBrains Mono",monospace;font-size:.68rem;'>EXPLANATION</span>
+        <div style='background:rgba(64,138,113,.08);border:1px solid rgba(64,138,113,.2);
+        border-left:3px solid #408A71;padding:.7rem 1rem;margin-top:.5rem;border-radius:6px;'>
+          <span style='color:#408A71;font-family:"JetBrains Mono",monospace;font-size:.68rem;'>EXPLANATION</span>
           <p style='color:#b8c4d4;margin:.3rem 0 0;font-size:.83rem;'>{q['explanation']}</p>
         </div>""", unsafe_allow_html=True)
 
@@ -432,9 +437,9 @@ def _render_practice(topic: str) -> None:
                 <div style='margin-top:.8rem;'>
                   <div class='sec-tag'>STEP-BY-STEP SOLUTION</div>
                   <div style='margin-top:.5rem;'>{steps_html}</div>
-                  <div style='background:rgba(255,107,53,.07);border:1px solid rgba(255,107,53,.25);
+                  <div style='background:rgba(64,138,113,.08);border:1px solid rgba(64,138,113,.25);
                   padding:.7rem 1rem;margin-top:.8rem;border-radius:6px;'>
-                    <div style='color:#FF6B35;font-family:"JetBrains Mono",monospace;font-size:.68rem;
+                    <div style='color:#408A71;font-family:"JetBrains Mono",monospace;font-size:.68rem;
                     margin-bottom:.3rem;'>FINAL ANSWER</div>
                     <div style='color:{title_c};font-size:.88rem;'>{prob['answer']}</div>
                   </div>
@@ -483,8 +488,8 @@ def render() -> None:
         status = _topic_status(topic)
         pct_t  = int(frac * 100)
         status_colors = {
-            "mastered":    "#FF6B35",
-            "in-progress": "#FFA060",
+            "mastered":    "#408A71",
+            "in-progress": "#B0E4CC",
             "new":         "#706860",
         }
         st.markdown(f"""

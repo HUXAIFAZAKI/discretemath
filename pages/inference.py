@@ -76,10 +76,10 @@ def render() -> None:
                 <div class='card'>
                   <div class='sec-tag'>{rule['name'].upper()}</div>
                   <div class='formula'>{rule['formula']}</div>
-                  <pre style='color:#FF6B35;font-family:"JetBrains Mono",monospace;font-size:0.8rem;
-                  background:rgba(255,107,53,0.05);padding:0.6rem;border:1px solid rgba(255,107,53,.2);
+                  <pre style='color:#408A71;font-family:"JetBrains Mono",monospace;font-size:0.8rem;
+                  background:rgba(64,138,113,0.08);padding:0.6rem;border:1px solid rgba(64,138,113,.2);
                   border-radius:4px;margin:0.6rem 0;'>{rule['form']}</pre>
-                  <p style='font-size:0.8rem;'><b style='color:#FF6B35;'>Example:</b> {rule['example']}</p>
+                  <p style='font-size:0.8rem;'><b style='color:#408A71;'>Example:</b> {rule['example']}</p>
                 </div>""", unsafe_allow_html=True)
 
     with tab2:

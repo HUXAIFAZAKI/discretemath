@@ -57,13 +57,13 @@ def render() -> None:
     <div class='cta-banner'>
       <div style='font-size:2.2rem;'>&#128218;</div>
       <div>
-        <div style='font-family:"Syne",sans-serif;font-size:1.05rem;font-weight:800;color:#FF6B35;margin-bottom:.3rem;'>
+        <div style='font-family:"Syne",sans-serif;font-size:1.05rem;font-weight:800;color:#408A71;margin-bottom:.3rem;'>
           Your Personal Study Hub
         </div>
         <div style='font-size:.86rem;color:#9E9890;'>
           Track your progress, follow the structured learning roadmap, take quizzes,
           and work through practice problems — all in one place.
-          <a href='?page=study' target='_self' style='color:#FF6B35;text-decoration:none;margin-left:.4rem;font-weight:600;'>
+          <a href='?page=study' target='_self' style='color:#B0E4CC;text-decoration:none;margin-left:.4rem;font-weight:600;border-bottom:1px solid rgba(176,228,204,.3);padding-bottom:1px;'>
             Open Study Hub →
           </a>
         </div>
@@ -112,7 +112,7 @@ def render() -> None:
                 <span style='font-size:1.1rem;'>{icon}</span>
                 <div>
                   <div style='font-family:"Space Grotesk",sans-serif;font-size:.9rem;font-weight:700;color:{title_color};'>{title}</div>
-                  <div style='font-family:"JetBrains Mono",monospace;font-size:.6rem;color:#FF6B35;letter-spacing:.08em;'>{week}</div>
+                  <div style='font-family:"JetBrains Mono",monospace;font-size:.6rem;color:#408A71;letter-spacing:.08em;'>{week}</div>
                 </div>
               </div>
               <p style='color:#9E9890;font-size:.8rem;line-height:1.6;margin:0;'>{desc}</p>

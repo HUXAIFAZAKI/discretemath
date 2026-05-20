@@ -27,7 +27,7 @@ def render() -> None:
             st.markdown(f"<div class='result-box'>{html}</div>", unsafe_allow_html=True)
             if rows:
                 classification = check_tautology(rows)
-                cl_color = "#FF6B35" if "TAUTOLOGY" in classification else ("#ff6b6b" if "CONTRADICTION" in classification else "#ff9f4a")
+                cl_color = "#408A71" if "TAUTOLOGY" in classification else ("#ff6b6b" if "CONTRADICTION" in classification else "#ff9f4a")
                 st.markdown(f"<div class='formula' style='color:{cl_color};border-color:{cl_color};'>Classification: {classification}</div>", unsafe_allow_html=True)
 
         st.markdown("<div class='sec-tag' style='margin-top:1.5rem;'>COMMON EXPRESSIONS TO TRY</div>", unsafe_allow_html=True)
@@ -123,16 +123,16 @@ def render() -> None:
 
             st.markdown(f"""
             <div class='result-box'>
-              <div style='margin-bottom:0.5rem;'><span style='color:#FF6B35;'>Domain:</span> {{{', '.join(str(x) for x in domain)}}}</div>
-              <div style='margin-bottom:0.5rem;'><span style='color:#FF6B35;'>P(x) true for:</span> {{{', '.join(str(x) for x in true_elems)}}}</div>
-              <div style='margin-bottom:0.5rem;'><span style='color:#FFA060;'>P(x) false for:</span> {{{', '.join(str(x) for x in false_elems)}}}</div>
-              <hr style='border-color:rgba(255,107,53,.2);margin:0.8rem 0;'/>
+              <div style='margin-bottom:0.5rem;'><span style='color:#408A71;'>Domain:</span> {{{', '.join(str(x) for x in domain)}}}</div>
+              <div style='margin-bottom:0.5rem;'><span style='color:#408A71;'>P(x) true for:</span> {{{', '.join(str(x) for x in true_elems)}}}</div>
+              <div style='margin-bottom:0.5rem;'><span style='color:#B0E4CC;'>P(x) false for:</span> {{{', '.join(str(x) for x in false_elems)}}}</div>
+              <hr style='border-color:rgba(64,138,113,.2);margin:0.8rem 0;'/>
               <div style='margin-bottom:0.4rem;'>
                 <span class='{"T" if for_all else "F"}'>∀x P(x): {"TRUE ✓" if for_all else "FALSE ✗"}</span>
-                {f"<span style='color:#8892a4;font-size:0.72rem;'> — counterexample: x={false_elems[0]}</span>" if not for_all and false_elems else ""}
+                {f"<span style='color:#6EADA0;font-size:0.72rem;'> — counterexample: x={false_elems[0]}</span>" if not for_all and false_elems else ""}
               </div>
               <div>
                 <span class='{"T" if exists else "F"}'>∃x P(x): {"TRUE ✓" if exists else "FALSE ✗"}</span>
-                {f"<span style='color:#8892a4;font-size:0.72rem;'> — witness: x={true_elems[0]}</span>" if exists and true_elems else ""}
+                {f"<span style='color:#6EADA0;font-size:0.72rem;'> — witness: x={true_elems[0]}</span>" if exists and true_elems else ""}
               </div>
             </div>""", unsafe_allow_html=True)

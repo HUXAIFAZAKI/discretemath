@@ -14,8 +14,8 @@ def render() -> None:
         st.markdown("""
         <div class='card'>
           <div class='sec-tag'>DISCRETE_MATH_CHATBOT</div>
-          <p style='color:#8892a4;font-size:0.85rem;margin-top:0.4rem;'>
-          Type any discrete mathematics problem <b style='color:#FF6B35;'>in plain English</b> and the AI will:
+          <p style='color:#6EADA0;font-size:0.85rem;margin-top:0.4rem;'>
+          Type any discrete mathematics problem <b style='color:#408A71;'>in plain English</b> and the AI will:
           interpret it, formulate it mathematically, solve it step-by-step, and give a clear final answer.
           </p>
         </div>""", unsafe_allow_html=True)
@@ -59,9 +59,9 @@ def render() -> None:
         for i, ex in enumerate(examples_nlp):
             with cols[i % 2]:
                 st.markdown(f"""
-                <div style='background:rgba(0,0,0,.08);border:1px solid rgba(255,107,53,.2);padding:0.6rem 0.9rem;
+                <div style='background:rgba(0,0,0,.08);border:1px solid rgba(64,138,113,.2);padding:0.6rem 0.9rem;
                 border-radius:4px;margin-bottom:0.5rem;font-size:0.78rem;
-                font-family:"JetBrains Mono",monospace;border-left:2px solid #FF6B35;'>
+                font-family:"JetBrains Mono",monospace;border-left:2px solid #408A71;'>
                 {ex}
                 </div>""", unsafe_allow_html=True)
 
@@ -69,9 +69,9 @@ def render() -> None:
         st.markdown("""
         <div class='card'>
           <div class='sec-tag'>ENGLISH → DISCRETE NOTATION</div>
-          <p style='color:#8892a4;font-size:0.85rem;margin-top:0.4rem;'>
+          <p style='color:#6EADA0;font-size:0.85rem;margin-top:0.4rem;'>
           Enter one or more English statements. The AI will identify the atomic propositions,
-          assign variables <b style='color:#FF6B35;'>(p, q, r, …)</b>, and express the statement
+          assign variables <b style='color:#408A71;'>(p, q, r, …)</b>, and express the statement
           in formal discrete math notation.
           </p>
           <div class='formula' style='margin-top:0.6rem;'>
@@ -101,15 +101,15 @@ def render() -> None:
             ("Contrapositive", "If the network is down, then you cannot send emails."),
             ("Compound", "If it is raining or snowing, then the road is slippery."),
         ]
-        st.markdown("<div style='font-family:\"JetBrains Mono\",monospace;font-size:0.68rem;color:#FF6B35;letter-spacing:0.1em;margin-bottom:0.4rem;'>QUICK EXAMPLES</div>", unsafe_allow_html=True)
+        st.markdown("<div style='font-family:\"JetBrains Mono\",monospace;font-size:0.68rem;color:#408A71;letter-spacing:0.1em;margin-bottom:0.4rem;'>QUICK EXAMPLES</div>", unsafe_allow_html=True)
         ecols = st.columns(2)
         for idx, (label, example_text) in enumerate(notation_examples):
             with ecols[idx % 2]:
                 st.markdown(f"""
-                <div style='background:rgba(0,0,0,.08);border:1px solid rgba(255,107,53,.2);padding:0.5rem 0.8rem;
-                border-radius:4px;margin-bottom:0.4rem;border-left:2px solid rgba(255,107,53,.5);'>
+                <div style='background:rgba(0,0,0,.08);border:1px solid rgba(64,138,113,.2);padding:0.5rem 0.8rem;
+                border-radius:4px;margin-bottom:0.4rem;border-left:2px solid rgba(64,138,113,.5);'>
                   <div style='font-family:"JetBrains Mono",monospace;font-size:0.62rem;
-                  color:#FF6B35;letter-spacing:0.08em;margin-bottom:0.2rem;'>{label}</div>
+                  color:#408A71;letter-spacing:0.08em;margin-bottom:0.2rem;'>{label}</div>
                   <div style='font-size:0.78rem;font-style:italic;'>"{example_text}"</div>
                 </div>""", unsafe_allow_html=True)
 
@@ -136,9 +136,9 @@ def render() -> None:
                     if vars_data:
                         vars_html = "".join(
                             f"<div style='display:flex;align-items:center;gap:0.8rem;padding:0.35rem 0;"
-                            f"border-bottom:1px solid rgba(255,107,53,.15);'>"
+                            f"border-bottom:1px solid rgba(64,138,113,.15);'>"
                             f"<span style='font-family:\"JetBrains Mono\",monospace;font-size:1rem;"
-                            f"color:#FF6B35;font-weight:700;min-width:24px;'>{v['symbol']}</span>"
+                            f"color:#408A71;font-weight:700;min-width:24px;'>{v['symbol']}</span>"
                             f"<span style='opacity:.5;'>≔</span>"
                             f"<span style='font-size:0.83rem;'>{v['meaning']}</span>"
                             f"</div>"
@@ -147,8 +147,8 @@ def render() -> None:
                         st.markdown(f"""
                         <div style='margin-bottom:1rem;'>
                           <div class='sec-tag'>VARIABLE ASSIGNMENTS</div>
-                          <div style='background:rgba(0,0,0,.08);border:1px solid rgba(255,107,53,.2);padding:0.7rem 1rem;
-                          border-radius:4px;border-left:3px solid #FF6B35;'>
+                          <div style='background:rgba(0,0,0,.08);border:1px solid rgba(64,138,113,.2);padding:0.7rem 1rem;
+                          border-radius:4px;border-left:3px solid #408A71;'>
                           {vars_html}
                           </div>
                         </div>""", unsafe_allow_html=True)
@@ -156,10 +156,10 @@ def render() -> None:
                     st.markdown(f"""
                     <div style='margin-bottom:1rem;'>
                       <div class='sec-tag'>FORMAL NOTATION</div>
-                      <div style='background:rgba(0,0,0,.08);border:1px solid rgba(255,107,53,.25);padding:1.1rem 1.4rem;
+                      <div style='background:rgba(0,0,0,.08);border:1px solid rgba(64,138,113,.25);padding:1.1rem 1.4rem;
                       border-radius:4px;text-align:center;'>
                         <span style='font-family:"JetBrains Mono",monospace;font-size:1.6rem;
-                        font-weight:700;color:#FF6B35;letter-spacing:0.06em;'>{notation}</span>
+                        font-weight:700;color:#408A71;letter-spacing:0.06em;'>{notation}</span>
                       </div>
                     </div>""", unsafe_allow_html=True)
 
@@ -169,21 +169,21 @@ def render() -> None:
                         st.markdown(f"""
                         <div style='margin-bottom:1rem;'>
                           <div class='sec-tag'>ARGUMENT FORM{form_label.upper()}</div>
-                          <div style='background:rgba(0,0,0,.08);border:1px solid rgba(255,107,53,.25);padding:0.9rem 1.2rem;
+                          <div style='background:rgba(0,0,0,.08);border:1px solid rgba(64,138,113,.25);padding:0.9rem 1.2rem;
                           border-radius:4px;font-family:"JetBrains Mono",monospace;
-                          font-size:1rem;color:#FFA060;line-height:2;'>
+                          font-size:1rem;color:#B0E4CC;line-height:2;'>
                           {arg_html}
                           </div>
                         </div>""", unsafe_allow_html=True)
 
                     details_html = ""
                     if explanation:
-                        details_html += f"<div style='margin-bottom:0.5rem;'><span style='color:#FF6B35;font-size:0.68rem;letter-spacing:0.08em;font-family:\"JetBrains Mono\",monospace;'>EXPLANATION</span><br><span>{explanation}</span></div>"
+                        details_html += f"<div style='margin-bottom:0.5rem;'><span style='color:#408A71;font-size:0.68rem;letter-spacing:0.08em;font-family:\"JetBrains Mono\",monospace;'>EXPLANATION</span><br><span>{explanation}</span></div>"
                     if truth_cond:
-                        details_html += f"<div><span style='color:#FF6B35;font-size:0.68rem;letter-spacing:0.08em;font-family:\"JetBrains Mono\",monospace;'>TRUTH CONDITION</span><br><span style='opacity:.7;'>{truth_cond}</span></div>"
+                        details_html += f"<div><span style='color:#408A71;font-size:0.68rem;letter-spacing:0.08em;font-family:\"JetBrains Mono\",monospace;'>TRUTH CONDITION</span><br><span style='opacity:.7;'>{truth_cond}</span></div>"
                     if details_html:
                         st.markdown(f"""
-                        <div style='background:rgba(0,0,0,.08);border:1px solid rgba(255,107,53,.2);padding:0.9rem 1.1rem;
+                        <div style='background:rgba(0,0,0,.08);border:1px solid rgba(64,138,113,.2);padding:0.9rem 1.1rem;
                         border-radius:4px;font-size:0.83rem;line-height:1.8;'>
                         {details_html}
                         </div>""", unsafe_allow_html=True)
