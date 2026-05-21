@@ -118,6 +118,8 @@ def _make_css(theme: str) -> str:
     res_bg      = "rgba(244,252,248,.97)"      if L else "rgba(6,14,12,.97)"
     formula_bg  = "rgba(40,90,72,.06)"         if L else "rgba(64,138,113,.07)"
 
+    option_text_color = "#091413" if L else "#B0E4CC"
+    option_bg_color = "#fff" if L else form_bg
     return f"""
 @import url('https://fonts.googleapis.com/css2?family=Syne:wght@400;500;600;700;800&family=Space+Grotesk:wght@300;400;500;600;700&family=JetBrains+Mono:wght@300;400;500;600;700&display=swap');
 
@@ -896,6 +898,11 @@ div[data-testid="stAlert"] {{ border-radius: 10px !important; border-left-width:
 [data-testid="stMultiSelect"] [role="option"]:hover {{ background: {ag} !important; }}
 
 /* ── Select dropdown options ── */
+[data-baseweb="popover"] [role="option"],
+[data-baseweb="menu"] [role="option"] {{
+  background: {option_bg_color} !important;
+  color: {option_text_color} !important;
+}}
 [data-baseweb="popover"] [role="option"]:hover,
 [data-baseweb="menu"] [role="option"]:hover {{
   background: {am} !important;
@@ -907,12 +914,12 @@ div[data-testid="stAlert"] {{ border-radius: 10px !important; border-left-width:
 }}
 [data-baseweb="popover"],
 [data-baseweb="menu"] {{
-  background: {form_bg} !important;
+  background: {option_bg_color} !important;
   border: 1px solid {bdr} !important;
   border-radius: 8px !important;
 }}
 [data-baseweb="popover"] li, [data-baseweb="menu"] li {{
-  color: {text} !important;
+  color: {option_text_color} !important;
 }}
 
 /* ── Native st.progress ── */
